@@ -3,6 +3,8 @@ import "./Header.css";
 import logo from "../../assets/Logo/VoyageStaylogo.png";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ProfileMenu from "./ProfileMenu";
+import BottomNav from "./BottomNav";
+import MobileSearch from "../Mobile Searh Bar/MobileSearch";
 function Header() {
   return (
     <div className="navbar">
@@ -21,6 +23,8 @@ function Header() {
             <ProfileMenu/>
         </div>
       </div>
+      <MobileSearch/>
+      <BottomNav/>
     </div>
   );
 }

@@ -1,0 +1,36 @@
+.type-filter{
+    padding: 2rem 3rem 1rem 3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+}
+
+.links-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+    opacity: 0.55;
+    border-bottom: 1px solid var(--white);
+    min-width: 75px;
+}
+
+.links-box:hover{
+    opacity: 1;
+    border-bottom: 1px solid var(--black);
+    transition: all 0.3s;
+}
+
+.links-img{
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+}
+
+.links-label{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--black);
+}
