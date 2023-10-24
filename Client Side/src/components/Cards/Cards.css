@@ -1,0 +1,22 @@
+.card-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 2.5rem;
+    gap: 1rem;
+}
+
+.property-card-img{
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.property-info-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}

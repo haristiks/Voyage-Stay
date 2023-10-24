@@ -5,6 +5,7 @@
   padding: 1rem 3rem;
   position: sticky;
   top: 0;
+  background-color: var(--white);
   border-bottom: 1px solid var(--grey);
 }
 
