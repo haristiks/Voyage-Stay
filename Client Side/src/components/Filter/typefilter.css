@@ -3,7 +3,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  overflow-x: auto;
+  overflow-x:auto;
+
 }
 
 .links-box {
@@ -15,6 +16,7 @@
   opacity: 0.55;
   border-bottom: 1px solid var(--white);
   min-width: 75px;
+  color: var(--black);
 }
 
 .links-box:hover {
@@ -34,6 +36,7 @@
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--black);
+  text-transform: none;
 }
 
 .selected-box {
@@ -46,3 +49,10 @@
   color: var(--black);
   font-weight: 800;
 }
+
+@media only screen and (max-width: 800px) {
+    .type-filter {
+      padding: 0.5rem;
+      padding-top: 1.5rem;
+    }
+  }

@@ -1,16 +1,15 @@
-import React from 'react'
-import "./Cards.css"
-import PropertyCard from './PropertyCard'
+import React from "react";
+import "./Cards.css";
+import PropertyCard from "./PropertyCard";
 
-function Properties() {
+function Properties({ list }) {
   return (
-    <div className='card-flex'>
-        <PropertyCard/>
-        <PropertyCard/>
-        <PropertyCard/>
-        <PropertyCard/>
+    <div className="card-flex">
+      {list.map((card, index) => (
+        <PropertyCard card={card} key={index} />
+      ))}
     </div>
-  )
+  );
 }
 
-export default Properties
+export default Properties;

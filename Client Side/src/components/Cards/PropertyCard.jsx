@@ -1,22 +1,45 @@
 import React from "react";
 import "./Cards.css";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import StarRateRoundedIcon from "@mui/icons-material/StarRateRounded";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper";
 
-function PropertyCard() {
+function PropertyCard({ card }) {
   return (
-    <div>
-      <img
-        src="https://a0.muscache.com/im/pictures/a1d94df4-0001-47ef-a45e-21db63919e79.jpg?im_w=1200"
-        alt=""
-        className="property-card-img"
-      />
+    <div className="property-card">
+      <Swiper
+        slidesPerView={1}
+        loop={true}
+        mousewheel={true}
+        cssMode={true}
+        pagination={{
+          dynamicBullets: true,
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        className="swiper-container"
+      >
+        {card.imgSrc.map((src, i) => (
+          <SwiperSlide key={i}>
+            <img src={src} className="property-card-img" />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <div className="property-info-flex">
-        <h3>Place</h3>
+        <h3 className="property-name">{card.title}</h3>
         <div className="star-rating">
-          <StarRoundedIcon />
-          <p>4.88</p>
+          <StarRateRoundedIcon />
+          <p>{card.rating}</p>
         </div>
       </div>
+      <p style={{ margin: 0, color: "var(--font-grey)" }}>{card.desc}</p>
+      <p style={{ margin: 0, color: "var(--font-grey)" }}>{card.date}</p>
+      <p style={{ margin: "0.2rem", fontSize: "1rem", color: "var(--black" }}>
+        <span style={{ fontWeight: "600" }}>₹{card.price}</span> night
+      </p>
     </div>
   );
 }
