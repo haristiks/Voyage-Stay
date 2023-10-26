@@ -6,6 +6,9 @@
   overflow-x:auto;
 
 }
+.filter-box{
+    width: 85%;
+}
 
 .links-box {
   display: flex;
@@ -50,9 +53,28 @@
   font-weight: 800;
 }
 
+.filters{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--grey);
+    border-radius: 0.5rem;
+    width: 15%;
+    
+}
+
 @media only screen and (max-width: 800px) {
     .type-filter {
       padding: 0.5rem;
       padding-top: 1.5rem;
+    }
+
+    .filter-box{
+        width: 100%;
+    }
+
+    .filters{
+        display: none;
     }
   }

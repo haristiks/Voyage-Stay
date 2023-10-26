@@ -1,0 +1,40 @@
+.host-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  background-color: var(--white);
+  z-index: 1000;
+  border-bottom: 1px solid var(--grey);
+}
+
+.try-host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.try-host-btn {
+  width: 12rem;
+  height: 2.5rem;
+  background-image: linear-gradient(var(--btn-one), var(--btn-two));
+  color: var(--white);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: medium;
+}
+
+.try-host p {
+  font-weight: 600;
+  color: var(--black);
+}
+
+.try-host-btn:hover{
+    background-image:linear-gradient(var(--theme),var(--theme)) ;
+    cursor: pointer;
+}
