@@ -23,7 +23,6 @@ function Header() {
         <div
           className="voyagestay-host"
           onClick={() => {
-            setHost(!host);
             navigate("/voyageStayHost");
           }}
         >

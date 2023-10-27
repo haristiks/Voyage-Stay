@@ -5,6 +5,7 @@ import Properties from "./components/Cards/Properties";
 import { list, list2 } from "./assets/sample-properties";
 import { Routes, Route } from "react-router-dom";
 import VoyageStayHost from "./components/Voyage Stay Host/VoyageStayHost";
+import HostLoginOrSignup from "./components/Voyage Stay Host/HostLoginOrSignup";
 
 function App() {
   const [selectedFilter, setSelectedFilter] = useState(0);
@@ -30,6 +31,7 @@ function App() {
           }
         />
         <Route path="/voyageStayHost" element={<VoyageStayHost />} />
+        <Route path="/hostLoginOrSignUp" element={<HostLoginOrSignup />} />
       </Routes>
     </>
   );
