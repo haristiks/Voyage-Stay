@@ -5,13 +5,13 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import "./Header.css"
+// import "./Header.css"
 
 export default function BottomNav() {
   const [value, setValue] = React.useState(0);
 
   return (
-    <div className='bottom-nav'>
+    <div className="block md:hidden fixed bottom-0 right-0 w-full border-t border-gray-200 shadow-md">
       <BottomNavigation
         showLabels
         value={value}

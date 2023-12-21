@@ -1,39 +1,30 @@
 import React from "react";
-import "./Header.css";
-import logo from "../../assets/Logo/VoyageStaylogo.png";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import ProfileMenu from "./ProfileMenu";
+// import "./Header.css";
+
 import BottomNav from "./BottomNav";
-import MobileSearch from "../Mobile Searh Bar/MobileSearch";
 import { useNavigate } from "react-router-dom";
+import Search from "./Search";
+import Container from "../Container";
+import Logo from "../Logo";
+import UserMenu from "./UserMenu";
+import Categories from "./Categories";
+
 function Header() {
   const navigate = useNavigate();
+
   return (
-    <div className="navbar">
-      <img src={logo} alt="Voyage-Stay-logo" className="navbar-logo" />
-      <div className="search-bar">
-        <div className="search-bar-text">Anywhere</div>
-        <div className="search-bar-text">Any week</div>
-        <div className="search-bar-text2">Add guests</div>
-        <div className="search-icon-div">
-          <SearchOutlinedIcon className="search-icon" />
-        </div>
+    <div className="fixed w-full bg-white z-10 shadow-sm">
+      <div className="py-4 border-b-[1px]">
+        <Container>
+          <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
+            <Logo />
+            <Search />
+            <UserMenu />
+            <BottomNav />
+          </div>
+        </Container>
+        <Categories />
       </div>
-      <div className="profile-container">
-        <div
-          className="voyagestay-host"
-          onClick={() => {
-            navigate("/voyageStayHost");
-          }}
-        >
-          Voyage Stay Host
-        </div>
-        <div className="profile-div">
-          <ProfileMenu />
-        </div>
-      </div>
-      <MobileSearch />
-      <BottomNav />
     </div>
   );
 }

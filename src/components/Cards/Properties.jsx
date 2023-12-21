@@ -1,12 +1,12 @@
 import React from "react";
-import "./Cards.css";
-import PropertyCard from "./PropertyCard";
+import { list } from "../../assets/sample-properties";
+import ListingCard from "./ListingCard";
 
-function Properties({ list }) {
+function Properties() {
   return (
-    <div className="card-flex">
+    <div className="pt-24 pb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
       {list.map((card, index) => (
-        <PropertyCard card={card} key={index} />
+        <ListingCard Card={card} key={index}/>
       ))}
     </div>
   );
