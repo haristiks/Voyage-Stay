@@ -1,31 +1,30 @@
+import Axios from "../../lib/Axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import useRegisterModal from "../../hooks/useRegisterModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import toast from "react-hot-toast";
 import Button from "../Button";
+
 import { useDispatch, useSelector } from "react-redux";
-import { onClose, onOpen } from "../../Redux/Reducers/useLoginModal";
-import { RMonOpen } from "../../Redux/Reducers/useRegisterModal";
+import { onOpen } from "../../Redux/Reducers/useLoginModal";
+import { RMonClose, RMonOpen } from "../../Redux/Reducers/useRegisterModal";
 import { useNavigate } from "react-router-dom";
 
-function LoginModal() {
-  const IsOpen = useSelector((state) => state.LoginModalIsOpen);
+function RegisterModal() {
+  const [isLoading, setIsLoading] = useState(false);
+  const IsOpen = useSelector((state) => state.RegisterModalIsOpen);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const registerModal = useRegisterModal();
-  const handleLogin =(e)=>{
+  const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(onOpen());
-    navigate("/login");
-  }
-
-  const [isLoading, setIsLoading] = useState(false);
+    dispatch(RMonOpen());
+    navigate("/register");
+  };
 
   const {
     register,
@@ -33,50 +32,53 @@ function LoginModal() {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(() => async (data) => {
     setIsLoading(true);
-
-    // const callback = await signIn("credentials", {
-    //   email: data.email,
-    //   password: data.password,
-    //   redirect: false,
-    // });
-
-    // console.log(callback);
-
-    // setIsLoading(false);
-
-    // if (callback?.ok) {
-    //   toast.success("Logged in");
-    //   router.refresh();
-    //   loginModal.onClose();
-    //   if (data.email == "admin@voyagestay.com") {
-    //     router.push("/admin")
-    //   }
-
-    // }
-
-    // if (callback?.error) {
-    //   toast.error(callback.error);
-    // }
-  };
+    console.log(data);
+    try {
+      const response = await Axios.post(
+        "/api/users/auth/signup",
+        data
+      );
+      toast.success(response.data.message);
+      dispatch(RMonClose());
+      dispatch(onOpen());
+      navigate('/login')
+    } catch (error) {
+      toast.error("Something Went Wrong");
+      console.log(err);
+    } finally {
+      () => {
+        setIsLoading(false);
+      };
+    }
+  });
 
   const toggle = useCallback(() => {
-    dispatch(onClose());
-    dispatch(RMonOpen());
-  }, [onClose, RMonOpen]);
+    dispatch(RMonClose());
+    dispatch(onOpen());
+  }, [onOpen, RMonClose]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome back" subtitle="Login to your account!" />
+      <Heading title="Welcome to Voyage Stay" subtitle="Create an account!" />
       <Input
         id="email"
         label="Email"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="name"
+        label="Name"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -101,22 +103,22 @@ function LoginModal() {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => signIn("google")}
+        onClick={() => {}}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => signIn("github")}
+        onClick={() => {}}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="justify-center flex flex-row item-center gap-2">
-          <div>First time using VoyageStay?</div>
+          <div>Already have an account?</div>
           <div
             onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
-            Create an account
+            Log in
           </div>
         </div>
       </div>
@@ -124,35 +126,38 @@ function LoginModal() {
   );
 
   if (!IsOpen) {
-    return(
+    return (
       <div className="flex h-screen justify-center items-center">
-      <div className="text-center">
-        <p className="text-lg mb-4">
-          Looks like you are not logged in, please login.
-        </p>
-        <button className="bg-rose-500 hover:opacity-80 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>
-          Login
-        </button>
+        <div className="text-center">
+          <p className="text-lg mb-4">
+            Looks like you haven't registered yet, Register Here.
+          </p>
+          <button
+            className="bg-rose-500 hover:opacity-80 text-white font-bold py-2 px-4 rounded"
+            onClick={handleRegister}
+          >
+            Register
+          </button>
+        </div>
       </div>
-    </div>
-    )
+    );
   }
 
   return (
     <Modal
       disabled={isLoading}
       isOpen={IsOpen}
-      title="Login"
+      title="Register"
       actionLabel="Continue"
       onClose={() => {
-        dispatch(onClose());
+        dispatch(RMonClose());
         navigate("/");
       }}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit())}
       body={bodyContent}
       footer={footerContent}
     />
   );
 }
 
-export default LoginModal;
+export default RegisterModal;

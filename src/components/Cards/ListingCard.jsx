@@ -10,7 +10,7 @@ import { Pagination, Navigation } from "swiper";
 
 function ListingCard({ onAction, actionLabel, Card }) {
   return (
-    <div className="col-span-1 cursor-pointer group -z-10 ">
+    <div className="col-span-1 cursor-pointer group  ">
       <div className="flex flex-col gap-2 w-full">
         <div className="aspect-square w-full relative overflow-hidden rounded-xl">
           <Swiper

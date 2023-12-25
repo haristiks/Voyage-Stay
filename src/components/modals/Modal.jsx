@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button";
 
+
 function Modal({
   isOpen,
   onClose,
@@ -18,6 +19,7 @@ function Modal({
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
+
 
   const handleClose = useCallback(() => {
     if (disabled) {

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "./components/Header/Header";
 import { Routes, Route } from "react-router-dom";
-import VoyageStayHost from "./components/Voyage Stay Host/VoyageStayHost";
-import HostLoginOrSignup from "./components/Voyage Stay Host/HostLoginOrSignup";
 import Home from "./Home";
+import LoginModal from "./components/modals/LoginModal";
+import RegisterModal from "./components/modals/RegisterModal";
+import ToasterProvider from "./lib/ToastProvider";
 
 function App() {
-  const [selectedFilter, setSelectedFilter] = useState(0);
-
   return (
     <>
       <Header />
+      <ToasterProvider/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/voyageStayHost" element={<VoyageStayHost />} />
-        <Route path="/hostLoginOrSignUp" element={<HostLoginOrSignup />} />
+        <Route path="/login" element={<LoginModal />} />
+        <Route path="/register" element={<RegisterModal />} />
       </Routes>
     </>
   );

@@ -4,38 +4,53 @@ import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
 // import { signOut } from "next-auth/react";
 
-// import useRegisterModal from "@/app/hooks/useRegisterModal";
-// import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "../../hooks//useRegisterModal";
 // import useRentModal from "@/app/hooks/useRentModal";
 
-
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { onOpen } from "../../Redux/Reducers/useLoginModal";
+import { RMonOpen } from "../../Redux/Reducers/useRegisterModal";
+
 
 function UserMenu({ currentUser }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-//   const registerModal = useRegisterModal();
-//   const loginModal = useLoginModal();
-//   const rentModal = useRentModal();
-
+  const registerModal = useRegisterModal();
+  //   const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
 
-//   const onRent = useCallback(() => {
-//     if (!currentUser) {
-//       return loginModal.onOpen();
-//     }
-//     rentModal.onOpen();
-//   }, [currentUser, loginModal, rentModal]);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(onOpen());
+    navigate("/login");
+    toggleOpen();
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(RMonOpen());
+    navigate("/register");
+    toggleOpen();
+  };
+
+  //   const onRent = useCallback(() => {
+  //     if (!currentUser) {
+  //       return loginModal.onOpen();
+  //     }
+  //     rentModal.onOpen();
+  //   }, [currentUser, loginModal, rentModal]);
 
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3 ">
         <div
-          onClick={()=>navigate('/voyageStayHost')}
+          onClick={() => navigate("/voyageStayHost")}
           className="
              hidden
              md:block
@@ -80,10 +95,7 @@ function UserMenu({ currentUser }) {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem
-                  onClick={() => navigate("/trips")}
-                  label="My trips"
-                />
+                <MenuItem onClick={() => navigate("/trips")} label="My trips" />
                 <MenuItem
                   onClick={() => navigate("/favorites")}
                   label="My favorites"
@@ -96,14 +108,14 @@ function UserMenu({ currentUser }) {
                   onClick={() => navigate("/properties")}
                   label="My properties"
                 />
-                <MenuItem onClick={()=>{}} label="VoyageStay Host" />
+                <MenuItem onClick={() => {}} label="VoyageStay Host" />
                 <hr />
                 <MenuItem onClick={() => {}} label="Lgout" />
               </>
             ) : (
               <>
-                <MenuItem onClick={()=>{}} label="Login" />
-                <MenuItem onClick={()=>{}} label="Sign up" />
+                <MenuItem onClick={handleLogin} label="Login" />
+                <MenuItem onClick={handleRegister} label="Sign up" />
               </>
             )}
           </div>

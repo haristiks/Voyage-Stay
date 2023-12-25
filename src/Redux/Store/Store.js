@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import VoyageReducer from "../Reducers/VoyageReducer";
+import LoginModal from "../Reducers/useLoginModal";
+import useRegisterModal from "../Reducers/useRegisterModal";
 
 export default configureStore({
     reducer:{
-        isHost:VoyageReducer,
+        LoginModalIsOpen:LoginModal,
+        RegisterModalIsOpen:useRegisterModal,
     }
 })
