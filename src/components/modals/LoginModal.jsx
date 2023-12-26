@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onClose, onOpen } from "../../Redux/Reducers/useLoginModal";
 import { RMonOpen } from "../../Redux/Reducers/useRegisterModal";
 import { useNavigate } from "react-router-dom";
+import Axios from "../../lib/Axios";
 
 function LoginModal() {
   const IsOpen = useSelector((state) => state.LoginModalIsOpen);
@@ -19,11 +20,11 @@ function LoginModal() {
   const navigate = useNavigate();
 
   const registerModal = useRegisterModal();
-  const handleLogin =(e)=>{
+  const handleLogin = (e) => {
     e.preventDefault();
     dispatch(onOpen());
     navigate("/login");
-  }
+  };
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,33 +39,29 @@ function LoginModal() {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(() => async (data) => {
     setIsLoading(true);
 
-    // const callback = await signIn("credentials", {
-    //   email: data.email,
-    //   password: data.password,
-    //   redirect: false,
-    // });
+    try {
+      const resp = await Axios.post("/api/auth/login", data);
 
-    // console.log(callback);
+      console.log(resp);
 
-    // setIsLoading(false);
+      setIsLoading(false);
 
-    // if (callback?.ok) {
-    //   toast.success("Logged in");
-    //   router.refresh();
-    //   loginModal.onClose();
-    //   if (data.email == "admin@voyagestay.com") {
-    //     router.push("/admin")
-    //   }
+      if (resp?.data.status == "success") {
+        toast.success("Logged in");
+        dispatch(onClose());
+        navigate("/");
 
-    // }
-
-    // if (callback?.error) {
-    //   toast.error(callback.error);
-    // }
-  };
+        // if (data.email == "admin@voyagestay.com") {
+        //   router.push("/admin");
+        // }
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  });
 
   const toggle = useCallback(() => {
     dispatch(onClose());
@@ -124,18 +121,21 @@ function LoginModal() {
   );
 
   if (!IsOpen) {
-    return(
+    return (
       <div className="flex h-screen justify-center items-center">
-      <div className="text-center">
-        <p className="text-lg mb-4">
-          Looks like you are not logged in, please login.
-        </p>
-        <button className="bg-rose-500 hover:opacity-80 text-white font-bold py-2 px-4 rounded" onClick={handleLogin}>
-          Login
-        </button>
+        <div className="text-center">
+          <p className="text-lg mb-4">
+            Looks like you are not logged in, please login.
+          </p>
+          <button
+            className="bg-rose-500 hover:opacity-80 text-white font-bold py-2 px-4 rounded"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+        </div>
       </div>
-    </div>
-    )
+    );
   }
 
   return (
@@ -148,7 +148,7 @@ function LoginModal() {
         dispatch(onClose());
         navigate("/");
       }}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit())}
       body={bodyContent}
       footer={footerContent}
     />

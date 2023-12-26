@@ -64,7 +64,7 @@ function UserMenu({ currentUser }) {
              cursor-pointer
             "
         >
-          VoyageStay Host
+          Host a Property
         </div>
         <div
           onClick={toggleOpen}
