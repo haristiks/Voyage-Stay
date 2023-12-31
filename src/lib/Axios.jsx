@@ -1,12 +1,11 @@
 import axios from "axios";
 
-export default axios.create({
+// Create the instance with settings
+const instance = axios.create({
   baseURL: "http://localhost:8000",
 });
+// instance.defaults.withCredentials = true;
+instance.defaults.headers.common['Content-Type'] = 'application/json';
 
-// {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization : `Bearer ${currentUser.accessToken}`,
-//     },
-//   }
+// Export the instance for use elsewhere
+export default instance;

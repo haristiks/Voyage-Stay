@@ -13,7 +13,7 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed w-full bg-white z-100 shadow-sm">
+    <div className="fixed w-full bg-white shadow-sm z-20">
       <div className="py-4 border-b-[1px]">
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">

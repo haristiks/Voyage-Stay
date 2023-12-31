@@ -1,21 +1,21 @@
 import toast from "react-hot-toast";
-import useRentModal from "@/app/hooks/useRentModal";
+// import useRentModal from "@/app/hooks/useRentModal";
 import Modal from "./Modal";
 import { useMemo, useState } from "react";
 import Heading from "../Heading";
 import { categories } from "../Header/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import { useForm } from "react-hook-form";
-import CountrySelect from "../inputs/CountrySelect";
+import CountrySelect from "../inputs/ContrySelect";
 
-import dynamic from "next/dynamic";
+import React, { lazy, Suspense } from "react";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload";
 import Input from "../inputs/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { RTMonClose } from "../../Redux/Reducers/useRentModal";
-import { FetchListings } from "@/app/Redux/AxiosCalls";
 import { useNavigate } from "react-router-dom";
+import Axios from "../../lib/Axios";
 
 const STEPS = {
   CATEGORY: 0,
@@ -27,15 +27,17 @@ const STEPS = {
 };
 
 function RentModal() {
-  const rentModal = useRentModal();
+  // const rentModal = useRentModal();
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
   //   const { data: session } = useSession();
   //   const currentUser = session?.user;
 
   const dispatch = useDispatch();
   const IsOpen = useSelector((state) => state.RentModalIsOpen);
+  const currentUser = useSelector((state) => state.currentUser);
 
   const {
     register,
@@ -51,7 +53,7 @@ function RentModal() {
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
-      imageSrc: "",
+      imageSrc: [],
       price: 1,
       title: "",
       description: "",
@@ -65,13 +67,7 @@ function RentModal() {
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
 
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("../Map"), {
-        ssr: false,
-      }),
-    [location]
-  );
+  const Map = lazy(() => import("../Map"));
 
   const setCustomValue = (id, value) => {
     setValue(id, value, {
@@ -91,34 +87,32 @@ function RentModal() {
 
   //..................API CALL......................
 
-  const SubmitHandler = (data) => {
+  const SubmitHandler = async (data) => {
     if (step !== STEPS.PRICE) {
       return onNext();
     }
 
     setIsLoading(true);
-
-    axios
-      .post(`/api/users/listings`, data, {
+    console.log("image", data.imageSrc);
+    try {
+      const res = await Axios.post(`/api/users/listings`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${currentUser.accessToken}`,
         },
-      })
-      .then(() => {
+      });
+      if (res?.data.status == "success") {
         toast.success("Listing created!");
-        router.refresh();
         reset();
         setStep(STEPS.CATEGORY);
-        dispatch(FetchListings());
-        rentModal.onClose();
-      })
-      .catch(() => {
-        toast.error("Something went wrong.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        dispatch(RTMonClose());
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   //....................................................
@@ -178,7 +172,12 @@ function RentModal() {
           value={location}
           onChange={(value) => setCustomValue("location", value)}
         />
-        <Map center={location?.latlng} />
+
+        {shouldLoadMap && (
+          <Suspense fallback={<div>Loading Map...</div>}>
+            <Map center={location?.latlng} />
+          </Suspense>
+        )}
       </div>
     );
   }
@@ -222,7 +221,10 @@ function RentModal() {
           subtitle="Show guests what your place looks like!"
         />
         <ImageUpload
-          onChange={(value) => setCustomValue("imageSrc", value)}
+          onChange={(value) => {
+            setCustomValue("imageSrc", value);
+            console.log("value",value);
+          }}
           value={imageSrc}
         />
       </div>

@@ -13,6 +13,7 @@ import { onClose, onOpen } from "../../Redux/Reducers/useLoginModal";
 import { RMonOpen } from "../../Redux/Reducers/useRegisterModal";
 import { useNavigate } from "react-router-dom";
 import Axios from "../../lib/Axios";
+import { login } from "../../Redux/Reducers/currentUserSlice";
 
 function LoginModal() {
   const IsOpen = useSelector((state) => state.LoginModalIsOpen);
@@ -45,12 +46,11 @@ function LoginModal() {
     try {
       const resp = await Axios.post("/api/auth/login", data);
 
-      console.log(resp);
-
       setIsLoading(false);
 
       if (resp?.data.status == "success") {
         toast.success("Logged in");
+        dispatch(login(resp.data));
         dispatch(onClose());
         navigate("/");
 

@@ -8,15 +8,17 @@ import useRegisterModal from "../../hooks//useRegisterModal";
 // import useRentModal from "@/app/hooks/useRentModal";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { onOpen } from "../../Redux/Reducers/useLoginModal";
 import { RMonOpen } from "../../Redux/Reducers/useRegisterModal";
+import { RTMonOpen } from "../../Redux/Reducers/useRentModal";
+import { logout } from "../../Redux/Reducers/currentUserSlice";
+import toast from "react-hot-toast";
 
-
-function UserMenu({ currentUser }) {
+function UserMenu() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const currentUser = useSelector((state) => state.currentUser);
   const registerModal = useRegisterModal();
   //   const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +33,13 @@ function UserMenu({ currentUser }) {
     navigate("/login");
     toggleOpen();
   };
+
+  const handleLogout = (e)=>{
+    e.preventDefault();
+    dispatch(logout())
+    toast.success("logout successfull")
+    toggleOpen();
+  }
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -50,7 +59,10 @@ function UserMenu({ currentUser }) {
     <div className="relative">
       <div className="flex flex-row items-center gap-3 ">
         <div
-          onClick={() => navigate("/voyageStayHost")}
+          onClick={() => {
+            dispatch(RTMonOpen());
+            navigate("/voyagehost");
+          }}
           className="
              hidden
              md:block
@@ -110,7 +122,7 @@ function UserMenu({ currentUser }) {
                 />
                 <MenuItem onClick={() => {}} label="VoyageStay Host" />
                 <hr />
-                <MenuItem onClick={() => {}} label="Lgout" />
+                <MenuItem onClick={handleLogout} label="Lgout" />
               </>
             ) : (
               <>

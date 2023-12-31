@@ -9,6 +9,8 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 
 function ListingCard({ onAction, actionLabel, Card }) {
+  const date = new Date().getFullYear();
+
   return (
     <div className="col-span-1 cursor-pointer group  ">
       <div className="flex flex-col gap-2 w-full">
@@ -25,7 +27,7 @@ function ListingCard({ onAction, actionLabel, Card }) {
             modules={[Pagination, Navigation]}
             className="w-full h-full"
           >
-            {Card.imgSrc.map((src, i) => (
+            {Card.imageSrc.map((src, i) => (
               <SwiperSlide key={i}>
                 <img src={src} className="object-cover w-full h-full" />
               </SwiperSlide>
@@ -37,11 +39,11 @@ function ListingCard({ onAction, actionLabel, Card }) {
         </div>
         <div className="font-semibold text-lg">
           {/* {location?.region},{location?.label} */}
-          {Card.desc}
+          {Card.description}
         </div>
         <div className="font-light text-neutral-500">
           {/* {reservationDate || data.category} */}
-          {Card.date}
+          {date}
         </div>
         <div className="flex flex-row items-center gap-1">
           <div className="font-semibold">₹{Card.price} </div>
