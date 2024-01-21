@@ -1,7 +1,7 @@
 import React from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
-function HeartButton({hasFavorited}) {
+function HeartButton({hasFavorited,listingId}) {
   return (
     <div className="relative hover:opacity-80 transition cursor-pointer">
       <AiOutlineHeart

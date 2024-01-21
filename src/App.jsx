@@ -8,6 +8,7 @@ import ToasterProvider from "./lib/ToastProvider";
 import RentModal from "./components/modals/RentModal";
 import { useDispatch } from "react-redux";
 import { FetchListings } from "./Redux/Reducers/AxiosCalls";
+import ListingClient from "./pages/ListingClient";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,12 +19,15 @@ function App() {
     <>
       <Header />
       <ToasterProvider />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginModal />} />
-        <Route path="/register" element={<RegisterModal />} />
-        <Route path="/voyagehost" element={<RentModal />} />
-      </Routes>
+      <LoginModal />
+      <RegisterModal />
+      <RentModal />
+      <div className="pb-10 pt-28 ">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/listings/:listingId" element={<ListingClient />} />
+        </Routes>
+      </div>
     </>
   );
 }

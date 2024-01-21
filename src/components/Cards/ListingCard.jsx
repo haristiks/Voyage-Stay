@@ -7,12 +7,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
+import { useNavigate } from "react-router-dom";
 
 function ListingCard({ onAction, actionLabel, Card }) {
   const date = new Date().getFullYear();
+  const navigate = useNavigate();
 
   return (
-    <div className="col-span-1 cursor-pointer group  ">
+    <div
+      className="col-span-1 cursor-pointer group  "
+      onClick={() => navigate(`/listings/${Card._id}`)}
+    >
       <div className="flex flex-col gap-2 w-full">
         <div className="aspect-square w-full relative overflow-hidden rounded-xl">
           <Swiper

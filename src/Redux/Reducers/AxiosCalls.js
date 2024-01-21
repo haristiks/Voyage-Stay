@@ -10,6 +10,16 @@ export const FetchListings = createAsyncThunk(
   }
 );
 
+
+export const FetchListingById = createAsyncThunk(
+  "redux/fetchListingById",
+  async (id) => {
+    console.log("Hi",id)
+    const respo = await Axios.get(`/api/data/listings/${id}`);
+    return respo.data.data;
+  }
+);
+
 // export const FetchReservations = createAsyncThunk(
 //   "redux/fetchReservations",
 //   async () => {

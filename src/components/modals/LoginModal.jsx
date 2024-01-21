@@ -44,7 +44,7 @@ function LoginModal() {
     setIsLoading(true);
 
     try {
-      const resp = await Axios.post("/api/auth/login", data);
+      const resp = await Axios.post("/api/auth/login", data, {withCredentials:true});
 
       setIsLoading(false);
 
@@ -120,23 +120,6 @@ function LoginModal() {
     </div>
   );
 
-  if (!IsOpen) {
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <div className="text-center">
-          <p className="text-lg mb-4">
-            Looks like you are not logged in, please login.
-          </p>
-          <button
-            className="bg-rose-500 hover:opacity-80 text-white font-bold py-2 px-4 rounded"
-            onClick={handleLogin}
-          >
-            Login
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <Modal

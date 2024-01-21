@@ -30,7 +30,6 @@ function UserMenu() {
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(onOpen());
-    navigate("/login");
     toggleOpen();
   };
 
@@ -44,7 +43,6 @@ function UserMenu() {
   const handleRegister = (e) => {
     e.preventDefault();
     dispatch(RMonOpen());
-    navigate("/register");
     toggleOpen();
   };
 
@@ -61,7 +59,6 @@ function UserMenu() {
         <div
           onClick={() => {
             dispatch(RTMonOpen());
-            navigate("/voyagehost");
           }}
           className="
              hidden

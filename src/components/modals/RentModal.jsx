@@ -98,8 +98,9 @@ function RentModal() {
       const res = await Axios.post(`/api/users/listings`, data, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${currentUser.accessToken}`,
+          // Authorization: `Bearer ${currentUser.accessToken}`,
         },
+        withCredentials: true,
       });
       if (res?.data.status == "success") {
         toast.success("Listing created!");
@@ -143,7 +144,7 @@ function RentModal() {
         grid-cols-1
         md:grid-cols-2
         gap-3
-        max=h-[50vh]
+        max-h-[50vh]
         overflow-y-auto
       "
       >
@@ -223,7 +224,7 @@ function RentModal() {
         <ImageUpload
           onChange={(value) => {
             setCustomValue("imageSrc", value);
-            console.log("value",value);
+            console.log("value", value);
           }}
           value={imageSrc}
         />
