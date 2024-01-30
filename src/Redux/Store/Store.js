@@ -5,6 +5,7 @@ import useRentModal from "../Reducers/useRentModal";
 import currentUserSlice from "../Reducers/currentUserSlice";
 import propertyListingsSlice from "../Reducers/propertyListingsSlice";
 import propertyByIdSlice from "../Reducers/propertyByIdSlice";
+import favoritesSlice from "../Reducers/favoritesSlice";
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     RentModalIsOpen: useRentModal,
     currentUser:currentUserSlice,
     ListingState:propertyListingsSlice,
-    SingleListing:propertyByIdSlice
+    SingleListing:propertyByIdSlice,
+    UserFavorites:favoritesSlice
   },
 });

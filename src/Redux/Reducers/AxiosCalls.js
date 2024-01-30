@@ -20,13 +20,13 @@ export const FetchListingById = createAsyncThunk(
   }
 );
 
-// export const FetchReservations = createAsyncThunk(
-//   "redux/fetchReservations",
-//   async () => {
-//     const respo = await axios.get("/api/data/reservations");
-//     return respo.data.data;
-//   }
-// );
+export const FetchFavorites = createAsyncThunk(
+  "redux/fetchFavorites",
+  async () => {
+    const respo = await Axios.get("/api/users/favorites");
+    return respo.data.data;
+  }
+);
 
 // export const FetchUsers = createAsyncThunk(
 //   "redux/fetchUsers",

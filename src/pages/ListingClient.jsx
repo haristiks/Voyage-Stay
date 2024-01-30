@@ -136,7 +136,7 @@ function ListingClient() {
             title={list?.title}
             imageSrc={list?.imageSrc[0]}
             locationValue={list?.locationValue}
-            id={list?.id}
+            id={list?._id}
           />
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
             <ListingInfo

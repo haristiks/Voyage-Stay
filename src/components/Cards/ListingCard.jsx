@@ -39,7 +39,7 @@ function ListingCard({ onAction, actionLabel, Card }) {
             ))}
           </Swiper>
           <div className="absolute top-3 right-3 z-10">
-            <HeartButton />
+            <HeartButton listingId={Card._id} />
           </div>
         </div>
         <div className="font-semibold text-lg">

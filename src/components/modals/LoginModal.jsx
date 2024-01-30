@@ -14,6 +14,7 @@ import { RMonOpen } from "../../Redux/Reducers/useRegisterModal";
 import { useNavigate } from "react-router-dom";
 import Axios from "../../lib/Axios";
 import { login } from "../../Redux/Reducers/currentUserSlice";
+import { FetchFavorites } from "../../Redux/Reducers/AxiosCalls";
 
 function LoginModal() {
   const IsOpen = useSelector((state) => state.LoginModalIsOpen);
@@ -44,7 +45,9 @@ function LoginModal() {
     setIsLoading(true);
 
     try {
-      const resp = await Axios.post("/api/auth/login", data, {withCredentials:true});
+      const resp = await Axios.post("/api/auth/login", data, {
+        withCredentials: true,
+      });
 
       setIsLoading(false);
 
@@ -52,6 +55,7 @@ function LoginModal() {
         toast.success("Logged in");
         dispatch(login(resp.data));
         dispatch(onClose());
+        dispatch(FetchFavorites());
         navigate("/");
 
         // if (data.email == "admin@voyagestay.com") {
@@ -119,7 +123,6 @@ function LoginModal() {
       </div>
     </div>
   );
-
 
   return (
     <Modal

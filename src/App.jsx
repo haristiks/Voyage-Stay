@@ -9,6 +9,7 @@ import RentModal from "./components/modals/RentModal";
 import { useDispatch } from "react-redux";
 import { FetchListings } from "./Redux/Reducers/AxiosCalls";
 import ListingClient from "./pages/ListingClient";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/listings/:listingId" element={<ListingClient />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </div>
     </>
