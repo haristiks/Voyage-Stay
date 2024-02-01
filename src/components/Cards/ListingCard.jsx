@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 
@@ -8,10 +8,49 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
-function ListingCard({ onAction, actionLabel, Card }) {
+function ListingCard({
+  onAction,
+  actionLabel,
+  reservation,
+  actionId = "",
+  disabled,
+  Card,
+}) {
   const date = new Date().getFullYear();
   const navigate = useNavigate();
+
+  const handleCancel = useCallback(
+    (e) => {
+      e.stopPropagation();
+
+      if (disabled) {
+        return;
+      }
+
+      onAction?.(actionId);
+    },
+    [onAction, actionId, disabled]
+  );
+
+  const price = useMemo(() => {
+    if (reservation) {
+      return reservation.totalPrice;
+    }
+    return Card.price;
+  }, [reservation, Card.price]);
+
+  const reservationDate = useMemo(() => {
+    if (!reservation) {
+      return null;
+    }
+
+    const start = new Date(reservation.startDate);
+    const end = new Date(reservation.endDate);
+
+    return `${format(start, "PP")} - ${format(end, "PP")}`;
+  }, [reservation]);
 
   return (
     <div
@@ -47,20 +86,19 @@ function ListingCard({ onAction, actionLabel, Card }) {
           {Card.description}
         </div>
         <div className="font-light text-neutral-500">
-          {/* {reservationDate || data.category} */}
+          {reservationDate || Card.category}
           {date}
         </div>
         <div className="flex flex-row items-center gap-1">
           <div className="font-semibold">₹{Card.price} </div>
-          <div className="font-light">night</div>
-          {/* {!reservation && <div className="font-light">night</div>} */}
+          {!reservation && <div className="font-light">night</div>}
         </div>
         {onAction && actionLabel && (
           <Button
             disabled={disabled}
             small
             label={actionLabel}
-            onClick={() => {}}
+            onClick={handleCancel}
           />
         )}
       </div>

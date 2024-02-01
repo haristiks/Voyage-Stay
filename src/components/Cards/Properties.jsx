@@ -13,7 +13,7 @@ function Properties() {
       {ListingState.Listings.map((card, index) => (
         <ListingCard
           Card={card}
-          key={index}
+          key={card._id}
          
         />
       ))}

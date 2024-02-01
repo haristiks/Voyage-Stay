@@ -10,7 +10,6 @@ import ListingReservation from "../components/listings/ListingReservation";
 import { useDispatch, useSelector } from "react-redux";
 import { onOpen } from "../Redux/Reducers/useLoginModal";
 import toast from "react-hot-toast";
-import { loadStripe } from "@stripe/stripe-js";
 import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 
 const initialDateRange = {
@@ -77,8 +76,6 @@ function ListingClient() {
 
     setIsloading(true);
 
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY);
-
     try {
       const resp = await axios.post(
         `/api/users/reservations`,
@@ -87,21 +84,13 @@ function ListingClient() {
           startDate: dateRange.startDate,
           endDate: dateRange.endDate,
           listingId: list?._id,
-        },
-        {
-          withCredentials: true,
         }
       );
-
-      const result = stripe.redirectToCheckout({
-        sessionId: resp.data.id,
-      });
+      
+      toast.success(resp.data.message)
 
       setDateRange(initialDateRange);
 
-      if (result.error) {
-        console.log(result.error);
-      }
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {

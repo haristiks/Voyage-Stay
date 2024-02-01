@@ -33,12 +33,12 @@ function UserMenu() {
     toggleOpen();
   };
 
-  const handleLogout = (e)=>{
+  const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout())
-    toast.success("logout successfull")
+    dispatch(logout());
+    toast.success("logout successfull");
     toggleOpen();
-  }
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -104,17 +104,32 @@ function UserMenu() {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => navigate("/trips")} label="My trips" />
                 <MenuItem
-                  onClick={() => navigate("/favorites")}
+                  onClick={() => {
+                    navigate("/trips");
+                    toggleOpen();
+                  }}
+                  label="My trips"
+                />
+                <MenuItem
+                  onClick={() => {
+                    navigate("/favorites");
+                    toggleOpen();
+                  }}
                   label="My favorites"
                 />
                 <MenuItem
-                  onClick={() => navigate("/reservations")}
+                  onClick={() => {
+                    navigate("/reservations");
+                    toggleOpen();
+                  }}
                   label="My reservations"
                 />
                 <MenuItem
-                  onClick={() => navigate("/properties")}
+                  onClick={() => {
+                    navigate("/properties");
+                    toggleOpen();
+                  }}
                   label="My properties"
                 />
                 <MenuItem onClick={() => {}} label="VoyageStay Host" />

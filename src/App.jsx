@@ -10,6 +10,10 @@ import { useDispatch } from "react-redux";
 import { FetchListings } from "./Redux/Reducers/AxiosCalls";
 import ListingClient from "./pages/ListingClient";
 import Favorites from "./pages/Favorites";
+import Reservations from "./pages/Reservations";
+import PropertiesClient from "./pages/PropertiesClient";
+import Trips from "./pages/Trips";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,8 +32,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/listings/:listingId" element={<ListingClient />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/reservations" element={<Reservations />} />
+          <Route path="/properties" element={<PropertiesClient />} />
+          <Route path="/trips" element={<Trips />} />
         </Routes>
       </div>
+      <Footer/>
     </>
   );
 }
